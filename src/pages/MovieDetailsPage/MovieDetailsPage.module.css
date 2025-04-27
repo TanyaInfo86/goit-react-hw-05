@@ -1,0 +1,28 @@
+.container {
+    padding: 20px;
+  }
+  
+  .backLink {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: underline;
+    color: black;
+  }
+  
+  .details {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .poster {
+    width: 250px;
+  }
+  
+  .info {
+    max-width: 600px;
+  }
+  
+  .additional {
+    margin-top: 30px;
+  }
+  
