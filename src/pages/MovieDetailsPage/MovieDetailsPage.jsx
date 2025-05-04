@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense, useRef } from 'react';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { getMovieDetails } from '/src/services/tmdbApi.js';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -7,7 +7,7 @@ import styles from './MovieDetailsPage.module.css';
 export default function MovieDetailsPage() {
     const { movieId } = useParams();
     const location = useLocation();
-    const from = location.state?.from ?? '/movies';
+    const backLinkRef = useRef(location.state?.from ?? '/movies');
     const [movie, setMovie] = useState(null);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function MovieDetailsPage() {
 
     return (
         <div className={styles.container}>
-            <Link to={from} className={styles.backLink}>
+            <Link to={backLinkRef.current} className={styles.backLink}>
                 <FaArrowLeft className={styles.icon} />
                 Go back
             </Link>
@@ -37,15 +37,15 @@ export default function MovieDetailsPage() {
                     <h3>Overview</h3>
                     <p>{movie.overview}</p>
                     <h3>Genres</h3>
-                    <p>{movie.genres.map(genre => genre.name).join(', ')}</p>
+                    <p>{movie.genres?.map(genre => genre.name).join(', ')}</p>
                 </div>
             </div>
 
             <div className={styles.additional}>
                 <h3>Additional information</h3>
                 <ul>
-                    <li><Link to="cast" state={{ from }}>Cast</Link></li>
-                    <li><Link to="reviews" state={{ from }}>Reviews</Link></li>
+                    <li><Link to="cast" state={{ from: backLinkRef.current }}>Cast</Link></li>
+                    <li><Link to="reviews" state={{ from: backLinkRef.current }}>Reviews</Link></li>
                 </ul>
             </div>
 
